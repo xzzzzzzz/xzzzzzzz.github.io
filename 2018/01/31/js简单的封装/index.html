@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
+        
+        js简单的封装 · 沙漠中的勇者
+        
+    </title>
+    <link rel="icon" href= /assets/favicon.ico>
+    <!-- TODO: 在font-face加载完毕后改变字体  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
+    <!-- 提前加载place holder  -->
+    <style type="text/css">
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url(/font/Oswald-Regular.ttf);
+        }
+    </style>
+    <style type="text/css">
+        .site-intro {
+            position: relative;
+            width: 100%;
+            height: 50vh;
+            overflow: hidden;
+            box-shadow: -0.1rem 0 0.5rem 0 rgba(0, 0, 0, 0.5);
+        }
+        .site-intro-placeholder {
+            position: absolute;
+            z-index: -2;
+            top: 0;
+            left: 0px;
+            width: calc(100% + 300px);
+            height: 100%;
+            background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+            background-position: center center;
+            transform: translate3d(-226px, 0, 0);
+            animation: gradient-move 2.5s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+    <link rel="stylesheet" href = /css/style.css?v=20180120 />
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >沙漠中的勇者</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">js简单的封装</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>沙漠中的勇者</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(https://cdn.pixabay.com/photo/2017/12/15/13/51/polynesia-3021072_960_720.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            js简单的封装
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = "/static/api/js/share.js"];</script>
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/01/31</span>
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe604;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">
+                        &#xe601;
+                    </span>
+                    <span class="bdsharebuttonbox">
+                        <a href="#" class="bds_more shareText" data-cmd="more">Share</a>
+                    </span>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <script>
+            var browser = {
+                    versions: function () {
+                        var u = window.navigator.userAgent;
+                        return {
+                            userAgent: u,
+                            trident: u.indexOf('Trident') > -1, //IE内核
+                            presto: u.indexOf('Presto') > -1, //opera内核
+                            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+                            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+                            iPad: u.indexOf('iPad') > -1, //是否为iPad
+                            webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+                            weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+                            uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+                        };
+                    }()
+                }
+
+            function fontLoaded(){
+                console.log('font loaded');
+                if (document.getElementsByClassName('site-intro-meta')) {
+                    document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+                    document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+                    var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+                        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+                        if (postIntroTags) {
+                            postIntroTags.classList.add('post-fade-in');
+                        }
+                        if (postIntroMeat) {
+                            postIntroMeat.classList.add('post-fade-in');
+                        }
+                    }
+                }
+                
+            console.log("userAgent:" + browser.versions.userAgent);
+            // UC不支持跨域，所以直接显示
+            if (browser.versions.uc) {
+                console.log("UCBrowser");
+                fontLoaded();
+            } else {
+                WebFont.load({
+                    custom: {
+                        families: ['Oswald-Regular']
+                    },
+                    loading: function () {  //所有字体开始加载
+                        // console.log('loading');
+                    },
+                    active: function () {  //所有字体已渲染
+                        fontLoaded();
+                    },
+                    inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+                        console.log('inactive: timeout');
+                        fontLoaded();
+                    },
+                    timeout: 7000 // Set the timeout to two seconds
+                });
+            }
+        </script>
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>JS是一门面向对象语言,其对象是用prototype属性来模拟的。来看看如何封装JS对象.</p>
+<h2 id="常规封装"><a href="#常规封装" class="headerlink" title="常规封装"></a>常规封装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function Person (name,age,sex)&#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">    this.age = age;</span><br><span class="line">    this.sex = sex;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Pserson.prototype = &#123;</span><br><span class="line">    constructor:Person,</span><br><span class="line">    sayHello:function()&#123;</span><br><span class="line">        console.log(&apos;hello&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式是比较常见的方式,比较直观,但是Person() 的职责是构造对象,如果把初始化的事情也放在里面完成,代码就会显得繁琐,如果放在一个方法里初始化会不会好点呢?</p>
+<h2 id="升级版-常见"><a href="#升级版-常见" class="headerlink" title="升级版 (常见)"></a>升级版 (常见)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Person (info)&#123;</span><br><span class="line">    this._init_(info);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Pserson.prototype = &#123;</span><br><span class="line">    constructor : Person,</span><br><span class="line">    _init_ : function(info) &#123;</span><br><span class="line">        this.name = info.name;</span><br><span class="line">        this.age = info.age;</span><br><span class="line">        this.sex = info.sex;</span><br><span class="line">    &#125;</span><br><span class="line">    sayHello:function()&#123;</span><br><span class="line">        console.log(&apos;hello&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 可是,说到这里就发现,name,age,sex 并没有在Person里面申明,哪来的呢???</p>
+<h2 id="new-的执行原理"><a href="#new-的执行原理" class="headerlink" title="new 的执行原理"></a>new 的执行原理</h2><p>new 的执行过程可以用下面一个函数来代替</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var myNew = function(constructor, args) &#123;</span><br><span class="line">   var o = &#123;&#125;;</span><br><span class="line">   o.__proto__ = constructor.prototype;</span><br><span class="line">   var res = constructor.apply(o, args);</span><br><span class="line">   var type = typeof res;</span><br><span class="line">   if ([&apos;string&apos;, &apos;number&apos;, &apos;boolean&apos;, &apos;null&apos;, &apos;undefined&apos;].indexOf(type) !== -1) &#123;</span><br><span class="line">       return o;</span><br><span class="line">   &#125;</span><br><span class="line">   return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解释:<br>首先通过 var o = {} 构造一个空对象.<br>然后将 构造函数的原型属性prototype赋值给o 的原型对象<strong>proto</strong> 。这样，在执行 this.init(info); 这句话的时候，对象 o 就可以在其原型对象中查找<em>init</em> 方法。（原型链）。<br>之后这句话 就是精髓了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var res = constructor.apply(o,args);</span><br></pre></td></tr></table></figure>
+<p> 以o为上下文调用函数，同时将参数作为数组传递。那么，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this._init_(info);</span><br></pre></td></tr></table></figure></p>
+<p> 这句话就会被 o 执行，函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_init_ : function(info) &#123;</span><br><span class="line">       this.name = info.name;</span><br><span class="line">       this.age = info.age;</span><br><span class="line">       this.sex = info.sex;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>以 o 为上下文调用，o也将拥有自己的 name,age,sex 属性。</p>
+<p>如果在构造函数中，return 复合类型，包括对象，函数，和正则表达式，那么就会直接返回这个对象，否则，返回 o<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var type = typeof res;</span><br><span class="line">    if([&apos;string&apos;,&apos;number&apos;,&apos;boolean&apos;,&apos;null&apos;,&apos;undefined&apos;].indexOf(type) !== -1)&#123;</span><br><span class="line">        return o;</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br></pre></td></tr></table></figure></p>
+<p> 测试一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Person(name) &#123;</span><br><span class="line">     this.name = name;</span><br><span class="line"> &#125;</span><br><span class="line"> Person.prototype.sayHello = function() &#123;</span><br><span class="line">     console.log(this.name);</span><br><span class="line"> &#125;</span><br><span class="line"> var o1 = myNew(Person, [&apos;pawn&apos;]);</span><br><span class="line"> console.log(o1);</span><br><span class="line"> o1.sayHello();</span><br></pre></td></tr></table></figure></p>
+<p>call方法:<br>语法：call([thisObj[,arg1[, arg2[,   [,.argN]]]]])<br>定义：调用一个对象的一个方法，以另一个对象替换当前对象。<br>说明：<br>call 方法可以用来代替另一个对象调用一个方法。call 方法可将一个函数的对象上下文从初始的上下文改变为由 thisObj 指定的新对象。<br>如果没有提供 thisObj 参数，那么 Global 对象被用作 thisObj。 </p>
+<p>apply方法：<br>语法：apply([thisObj[,argArray]])<br>定义：应用某一对象的一个方法，用另一个对象替换当前对象。<br>说明：<br>如果 argArray 不是一个有效的数组或者不是 arguments 对象，那么将导致一个 TypeError。<br>如果没有提供 argArray 和 thisObj 任何一个参数，那么 Global 对象将被用作 thisObj， 并且无法被传递任何参数。</p>
+<h2 id="类jQuery-封装"><a href="#类jQuery-封装" class="headerlink" title="类jQuery 封装"></a>类jQuery 封装</h2><p>这种方式是我从 jQuery 那里学来的。</p>
+<p>jQuery 对象具有很强的集成性，可以作为函数调用，也可以做为对象调用，当作为函数调用的时候，她可以无需 new 而返回它的一个实例，很方便。</p>
+<p>代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var Person = function(info)&#123;</span><br><span class="line">    return new Person.prototype.init(info);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">    constructor: Person,</span><br><span class="line">    init:function()&#123;</span><br><span class="line">        this.name = info.name.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.init.prototype = Person.prototype;</span><br></pre></td></tr></table></figure></p>
+<p>这种封装方式非常巧妙。<br>将对象的构造操作放在函数的里面，而自己充当一个工厂。<br>不断调用 prototype 并不是一个直观的做法，于是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var Person = function(info)&#123;</span><br><span class="line">    return new Person.fn.init(info);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Person.fn = Person.prototype = &#123;</span><br><span class="line">    constructor: Person,</span><br><span class="line">    init:function()&#123;</span><br><span class="line">        this.name = info.name;</span><br><span class="line">        this.sayHello = function()&#123;</span><br><span class="line">            this.makeArray();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    makeArray:function()&#123;</span><br><span class="line">        console.log(this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 这句话的作用</span><br><span class="line">// 虽然把makeArray 等常用方法挂载到 Person.prorotype 下面,但还是会被 init 这个实例使用.</span><br><span class="line">Person.fn.init.prototype = Person.fn;</span><br></pre></td></tr></table></figure>
+<p> 最后用 闭包 封装起来</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">var Person = (function(window) &#123;</span><br><span class="line">       var Person = function(name) &#123;</span><br><span class="line">           return new Person.fn.init(name);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       Person.fn = Person.prototype = &#123;</span><br><span class="line">           constructor: Person,</span><br><span class="line">           init: function(name) &#123;</span><br><span class="line">               this.name = name;</span><br><span class="line">               this.sayHello = function() &#123;</span><br><span class="line">                   this.makeArray();</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;,</span><br><span class="line">           makeArray: function() &#123;</span><br><span class="line">               console.log(this.name);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       Person.fn.init.prototype = Person.fn;</span><br><span class="line"></span><br><span class="line">       return Person;</span><br><span class="line">   &#125;)();</span><br></pre></td></tr></table></figure>
+<p>测试一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var p = Person(&apos;pawn&apos;);</span><br><span class="line">   console.log(p);</span><br><span class="line">   p.sayHello();</span><br></pre></td></tr></table></figure>
+<h2 id="object-create"><a href="#object-create" class="headerlink" title="object.create()"></a>object.create()</h2><p>js也提供了一种构造对象的方式,object.create(); 可以传递一个对象Person,构造一个p,并且使p 继承Person.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var Person = &#123;</span><br><span class="line">      name: &apos;pawn&apos;,</span><br><span class="line">      sayHello: function() &#123;</span><br><span class="line">          console.log(this.name);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  var p = Object.create(Person);</span><br><span class="line">  console.log(p);</span><br><span class="line">  p.sayHello();</span><br></pre></td></tr></table></figure></p>
+<p>可以看到,对象Person的属性成为了p的原型属性,也就是说 p 原型继承自 Person !</p>
+<p>我们可以实现一个 Object.create()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Object.create = function(prototype)&#123;</span><br><span class="line">   function Func()&#123;&#125;;</span><br><span class="line">   Func.prototype = prototype;</span><br><span class="line">   var o = new Func();</span><br><span class="line">   return o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 在这里,我们将 Person 作为 构造函数的 原型属性,就可以构造出 以Person 为原型对象的对象.</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+        
+            <li class="previous">
+                <a href= "/2018/01/30/使用Hexo-Github一步步搭建属于自己的博客（基础）/" title= 使用Hexo+Github一步步搭建属于自己的博客（基础） >
+                    <span>Previous Post</span>
+                    <span>使用Hexo+Github一步步搭建属于自己的博客（基础）</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:522134950@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/xzzzzzzz" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title="rss"></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">VISITOR VOLUME: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper">
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常规封装"><span class="toc-number">1.</span> <span class="toc-text">常规封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级版-常见"><span class="toc-number">2.</span> <span class="toc-text">升级版 (常见)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new-的执行原理"><span class="toc-number">3.</span> <span class="toc-text">new 的执行原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类jQuery-封装"><span class="toc-number">4.</span> <span class="toc-text">类jQuery 封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object-create"><span class="toc-number">5.</span> <span class="toc-text">object.create()</span></a></li></ol>
+    </div>
+    
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header sidebar-header-show-archive">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 5 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/31</span><a class="archive-post-title" href= "/2018/01/31/js简单的封装/" >js简单的封装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span><a class="archive-post-title" href= "/2018/01/30/使用Hexo-Github一步步搭建属于自己的博客（基础）/" >使用Hexo+Github一步步搭建属于自己的博客（基础）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span><a class="archive-post-title" href= "/2018/01/30/myHexo/" >myHexo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span><a class="archive-post-title" href= "/2018/01/30/hello-world/" >Hello World</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2017/10/12/Hexo使用笔记/" >Hexo使用笔记</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name"><a href= "#">Hexo</a></span>
+    
+    </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
